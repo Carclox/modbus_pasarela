@@ -27,6 +27,10 @@ Este archivo representa el núcleo del sistema de pasarela. Es responsable de:
 
 > Este archivo utiliza las interfaces definidas en `rtu_interface.h`, `tcp_interface.h`, y la lógica de enrutamiento en `gateway_logic.h`.
 
+### :space_invader: Futuras mejoras
+1. Soporte para múltiples clientes TCP simultáneos usando select() o pthread.
+2. Archivos de configuración para puertos, baudrate, ID esclavo, etc.
+3. Manejo de errores más robusto y logs persistentes.
 
 ## 🧩 Módulo: `rtu_interface.c` - Interfaz para Modbus RTU
 
@@ -41,7 +45,13 @@ Su objetivo principal es encapsular la creación, configuración y conexión del
 ```c
 modbus_t *modbus_rtu_init(void);
 ```
-
+**Valor de retorno:** descriptor del entorno RTU creado.<br>
+**Modo de uso:**
+```C
+  ... //dentro de la funcion principal
+  modbus_rtu_init();
+  ...
+```
 ## 🌐 Módulo: `tcp_interface.c` - Interfaz para Modbus TCP
 
 Este archivo implementa la capa de inicialización y gestión de conexiones para la parte **Modbus TCP** de la pasarela. Utiliza la biblioteca [libmodbus](https://libmodbus.org/) para crear el servidor, escuchar conexiones entrantes y aceptar clientes.
@@ -110,4 +120,5 @@ Este archivo implementa el núcleo de la pasarela Modbus, encargándose de recib
 ```c
 void handle_client_connection(modbus_t *ctx_tcp_client, modbus_t *ctx_rtu);
 ```
+
 
